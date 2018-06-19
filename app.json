@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/sports/sports",
     "pages/index/index",
     "pages/logs/logs",
     "pages/article/article",

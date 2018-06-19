@@ -1,0 +1,21 @@
+<!-- <view class="page__bd page__bd_spacing">
+  <view class="weui-flex">
+    <view class="weui-flex__item">
+      <view class="placeholder">weui</view>
+    </view>
+  </view>
+  <view class="weui-flex">
+    <view class="weui-flex__item">
+      <view class="placeholder">
+        <canvas canvas-id="chartContainer" class="chartContainer" n style='justify-content:center; align:center'>
+        </canvas>
+      </view>
+    </view>
+  </view>
+</view> -->
+<!-- <canvas canvas-id="canvas1" style="width:200px;height:200px; justify-content:center;">
+</canvas>
+<canvas canvas-id="canvas2" style="width:200px;height:200px;">
+</canvas> -->
+ <canvas canvas-id="chartContainer" class="chartContainer">
+</canvas> 

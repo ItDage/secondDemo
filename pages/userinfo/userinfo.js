@@ -21,7 +21,6 @@ Page({
     var phoneNumber = this.data.phoneNumber;
     var birthday = this.data.date;
     openid = wx.getStorageSync('openId');
-    console.log(phoneNumber)
     if (phoneNumber != '' && util.checkMobile(phoneNumber)){
       //手机号格式正确
       wx.request({
