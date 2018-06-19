@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container" style="padding:0rpx">
+  <!--垂直滚动，这里必须设置高度-->
+    <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;" 
+        class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="topLoad"  bindscroll="scroll">
+        <view class="item" wx:for="{{list}}" wx:key="id">
+            <image class="img" src="../../images/{{item.icon}}"></image>
+            <view class="text">
+                <text class="title">{{item.title}}</text>
+                <text class="description">{{item.content}}</text>
+            </view>
+        </view>
+    </scroll-view>
+    <view class="body-view">
+        <loading hidden="{{hidden}}" bindchange="loadingChange">
+            加载中...
+        </loading>
+    </view>
+</view>
