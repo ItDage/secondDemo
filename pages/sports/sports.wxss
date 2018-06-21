@@ -1,24 +1,30 @@
-
 @import '../common/lib/weui.wxss';
 
-canvas{
+canvas {
   display: inline-block;
 }
- .chartContainer{
-  width: 500px; 
-  height: 500px; 
+
+/* .container {
+  display: flex;
+  justify-content: center;
+} */
+
+.chartContainer {
+  width: 500px;
+  height: 500px;
   margin-top: 10px;
   margin-left: 0px;
-  text-align: center;
   color: #000;
-} 
+   display: flex; 
+   justify-content: flex-end; 
+}
 
-.placeholder{
-    margin: 5px;
-    padding: 0 10px;
-    text-align: center;
-    background-color: #EBEBEB;
-    height: 2.3em;
-    line-height: 2.3em;
-    color: #cfcfcf;
+.placeholder {
+  margin: 5px;
+  padding: 0 10px;
+  text-align: center;
+  background-color: #ebebeb;
+  height: 2.3em;
+  line-height: 2.3em;
+  color: #cfcfcf;
 }

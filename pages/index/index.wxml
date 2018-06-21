@@ -22,13 +22,13 @@
         <view class="weui-panel__hd">文章列表</view>
         <view class="weui-panel__bd">
           <view wx:for="{{articleList}}" wx:key="id">
-            <navigator url="../article/article?articleId={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+             <navigator url="../article/article?articleId={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
               <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                 <image class="weui-media-box__thumb" src="../../images/{{item.icon}}" />
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                 <view class="weui-media-box__title">{{item.title}}</view>
-                <view class="weui-media-box__desc">{{item.content}}</view>
+                 <view class="weui-media-box__desc">{{item.articleAbstract}}</view> 
               </view>
             </navigator>
           </view>
@@ -40,4 +40,5 @@
         </view>
       </view>
     </view>
+  <image src='../../images/add.png' class='addArticle' bindtap="addArticle"></image>
 </block>

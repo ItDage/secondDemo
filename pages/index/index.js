@@ -3,8 +3,8 @@
 const app = getApp()
 
 var base64 = require("../../images/base64");
-var hasmore = true;
-
+var pageNum = 0;
+var totalData = 0;
 Page({
   data: {
     articleList: "",
@@ -43,7 +43,6 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
-        console.log("test4")
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -51,7 +50,6 @@ Page({
       }
         console.log(this.data.hasUserInfo)
     } else {
-      console.log("test2")
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
@@ -72,77 +70,28 @@ Page({
       }
     });
 
-    app.globalData.articleList = [
-      {
-        "id": 1,
-        "icon": 'gjbz.jpg',
-        "title": "文章一",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 2,
-        "icon": "lsxq.jpg",
-        "title": "文章二",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 3,
-        "icon": 'gjbz.jpg',
-        "title": "文章三",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 4,
-        "icon": "lsxq.jpg",
-        "title": "文章四",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 5,
-        "icon": 'gjbz.jpg',
-        "title": "文章五",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
+    wx.request({
+      url: app.globalData.serverAddress + '/article/get',
+      data: {
+        "pageNum": pageNum
       },
-      {
-        "id": 6,
-        "icon": 'gjbz.jpg',
-        "title": "文章七",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      },
-      {
-        "id": 7,
-        "icon": 'gjbz.jpg',
-        "title": "文章七",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 8,
-        "icon": "lsxq.jpg",
-        "title": "文章八",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 9,
-        "icon": 'gjbz.jpg',
-        "title": "文章九",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 10,
-        "icon": "lsxq.jpg",
-        "title": "文章十",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 11,
-        "icon": 'gjbz.jpg',
-        "title": "文章十一",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 12,
-        "icon": "lsxq.jpg",
-        "title": "文章十二",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }];
+      success:function(data){
+        app.globalData.articleList = data.data.data;
+        totalData = data.data.code;
+        
+        that.setData({
+          icon20: base64.icon20,
+          icon60: base64.icon60,
+          articleList: app.globalData.articleList
+        });
+      }
+    })
 
-
-    this.setData({
-      icon20: base64.icon20,
-      icon60: base64.icon60,
-      articleList: app.globalData.articleList
-    });
+    if (!this.data.hasUserInfo && this.data.canIUse) {
+      wx.hideTabBar();
+    } else {
+      wx.showTabBar();
+    }
 
   },
   getUserInfo: function (e) {
@@ -152,6 +101,7 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    wx.showTabBar();
   },
   searchScrollLower: function (e) {
 
@@ -164,94 +114,60 @@ Page({
   },
   onReachBottom: function () {
     var that = this;
-    console.log('loading')
-
-    var moreArticle = [
-      {
-        "id": 13,
-        "icon": 'gjbz.jpg',
-        "title": "文章七",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 14,
-        "icon": "lsxq.jpg",
-        "title": "文章八",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 15,
-        "icon": 'gjbz.jpg',
-        "title": "文章九",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 16,
-        "icon": "lsxq.jpg",
-        "title": "文章十",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 17,
-        "icon": 'gjbz.jpg',
-        "title": "文章十一",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 18,
-        "icon": "lsxq.jpg",
-        "title": "文章十二",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
+    ++pageNum;
+    wx.request({
+      url: app.globalData.serverAddress + '/article/get',
+      data: {
+        "pageNum": pageNum
       },
-      {
-        "id": 19,
-        "icon": 'gjbz.jpg',
-        "title": "文章七",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 20,
-        "icon": "lsxq.jpg",
-        "title": "文章八",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 21,
-        "icon": 'gjbz.jpg',
-        "title": "文章九",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 22,
-        "icon": "lsxq.jpg",
-        "title": "文章十",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 23,
-        "icon": 'gjbz.jpg',
-        "title": "文章十一",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }, {
-        "id": 24,
-        "icon": "lsxq.jpg",
-        "title": "文章十二",
-        "content": "由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道"
-      }];
-    for (var i = 0; i < moreArticle.length; i++) {
-      app.globalData.articleList.push(moreArticle[i])
-    }
-    var nomore = this.data.nomore;
-    if (!nomore && hasmore == true) {
-      hasmore = false;
-      this.setData({
-        articleList: app.globalData.articleList
-      })
-      setTimeout(function () {
-        hasmore = true;
-      }, 1000)
-      if (app.globalData.articleList.length == 36) {
-        this.setData({
-          nomore: true
-        })
-      } else {
-        wx.showToast({
+      success: function (data) {
+        totalData = data.data.code;
+        var moreArticle= data.data.data;
+        for (var i = 0; i < moreArticle.length; i++) {
+          app.globalData.articleList.push(moreArticle[i])
+        }
+        if(app.globalData.articleList.length == totalData){
+          //加载了全部
+          that.setData({
+            nomore: true
+          })
+        }else{
+          wx.showToast({
           title: '正在加载',
           icon: 'loading',
           duration: 2000
         })
+          that.setData({
+            articleList: app.globalData.articleList
+          })
+        }
+       
       }
-    }
+    })
+  },
+  addArticle: function(){
+    wx.navigateTo({
+      url: '../addArticle/addArticle'
+    })
+  },
+  onPullDownRefresh: function () {
+    var that = this;
+    wx.stopPullDownRefresh();
+    wx.request({
+      url: app.globalData.serverAddress + '/article/get',
+      data: {
+        "pageNum": pageNum
+      },
+      success: function (data) {
+        app.globalData.articleList = data.data.data;
+        totalData = data.data.code;
+
+        that.setData({
+          icon20: base64.icon20,
+          icon60: base64.icon60,
+          articleList: app.globalData.articleList
+        });
+      }
+    })
   }
 })

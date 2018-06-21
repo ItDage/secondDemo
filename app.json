@@ -1,11 +1,12 @@
 {
   "pages":[
-    "pages/sports/sports",
     "pages/index/index",
     "pages/logs/logs",
     "pages/article/article",
     "pages/personal/personal",
     "pages/userinfo/userinfo",
+    "pages/sports/sports",
+    "pages/addArticle/addArticle",
     "pages/test/test"
   ],
   "window":{
@@ -21,6 +22,12 @@
         "text": "首页",
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home_select.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "精选",
+        "iconPath": "images/lover.png",
+        "selectedIconPath": "images/lover_select.png"
       },
       {
         "pagePath": "pages/logs/logs",

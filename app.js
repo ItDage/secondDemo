@@ -34,13 +34,6 @@ App({
       })
     }
 
-    wx.getWeRunData({
-      success(res) {
-        const encryptedData = res.encryptedData
-        that.globalData.weirun = true;
-      }
-    })
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -58,19 +51,7 @@ App({
               }
             }
           })
-        }
-
-        if (res.authSetting['scope.werun']) {
-          // 已经授权微信运动
-          wx.getWeRunData({
-            success(res) {
-              console.log(res.errMsg)
-              console.log(res.iv)
-              const encryptedData = res.encryptedData
-              console.log(encryptedData);
-              that.globalData.weirun = true;
-            }
-          })
+          wx.showTabBar();
         }
       }
     })
