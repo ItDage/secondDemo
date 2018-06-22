@@ -9,17 +9,15 @@ Page({
   data: {
     articleList: "",
     imgUrls: [//轮播图
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      '../../images/scroll02.jpg',
+      '../../images/scroll03.jpg',
+      '../../images/scroll01.jpg',
     ],
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 1000,
     nomore: false,
-    scrollHeight: 0, //上滑区域
-    scrollTop: 0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false
   },
@@ -29,17 +27,16 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (options) {
+   console.log("us" + app.globalData.isRefreshIndex)
     var that = this;
 
     if (app.globalData.userInfo) {
-      console.log("test1")
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
     } else if (this.data.canIUse) {
-      console.log("test3")
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -48,7 +45,6 @@ Page({
           hasUserInfo: true
         })
       }
-        console.log(this.data.hasUserInfo)
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
@@ -62,23 +58,15 @@ Page({
       })
     }
 
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          scrollHeight: res.windowHeight
-        });
-      }
-    });
-
     wx.request({
       url: app.globalData.serverAddress + '/article/get',
       data: {
         "pageNum": pageNum
       },
-      success:function(data){
+      success: function (data) {
         app.globalData.articleList = data.data.data;
         totalData = data.data.code;
-        
+
         that.setData({
           icon20: base64.icon20,
           icon60: base64.icon60,
@@ -106,12 +94,6 @@ Page({
   searchScrollLower: function (e) {
 
   },
-  scroll: function (event) {
-    //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
-    this.setData({
-      scrollTop: event.detail.scrollTop
-    });
-  },
   onReachBottom: function () {
     var that = this;
     ++pageNum;
@@ -122,30 +104,29 @@ Page({
       },
       success: function (data) {
         totalData = data.data.code;
-        var moreArticle= data.data.data;
+        var moreArticle = data.data.data;
         for (var i = 0; i < moreArticle.length; i++) {
           app.globalData.articleList.push(moreArticle[i])
         }
-        if(app.globalData.articleList.length == totalData){
+        if (app.globalData.articleList.length == totalData) {
           //加载了全部
           that.setData({
             nomore: true
           })
-        }else{
+        } else {
           wx.showToast({
-          title: '正在加载',
-          icon: 'loading',
-          duration: 2000
-        })
-          that.setData({
-            articleList: app.globalData.articleList
+            title: '正在加载',
+            icon: 'loading',
+            duration: 2000
           })
         }
-       
+        that.setData({
+          articleList: app.globalData.articleList
+        })
       }
     })
   },
-  addArticle: function(){
+  addArticle: function () {
     wx.navigateTo({
       url: '../addArticle/addArticle'
     })
@@ -153,19 +134,27 @@ Page({
   onPullDownRefresh: function () {
     var that = this;
     wx.stopPullDownRefresh();
+    pageNum = 0;
+    that.setData({
+      nomore: false
+    })
     wx.request({
       url: app.globalData.serverAddress + '/article/get',
       data: {
-        "pageNum": pageNum
+        "pageNum": 0
       },
       success: function (data) {
         app.globalData.articleList = data.data.data;
         totalData = data.data.code;
-
         that.setData({
           icon20: base64.icon20,
           icon60: base64.icon60,
           articleList: app.globalData.articleList
+        });
+        wx.showToast({
+          title: '刷新成功!',
+          icon: 'success',
+          duration: 1500
         });
       }
     })

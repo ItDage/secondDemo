@@ -10,7 +10,8 @@
                 <view class="weui-article__section">
                     <!-- <view class="weui-article__h3">1.1 节标题</view> -->
                     <view class="weui-article__p">
-                       <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+                        <template is="wxParse" data="{{wxParseData:article.nodes}}"/> 
+                       <!-- {{content}} -->
                     </view>
                     <view class="weui-article__p">
                         <image class="weui-article__img" src="../../images/{{icon}}" mode="aspectFit" style="height: 180px" />

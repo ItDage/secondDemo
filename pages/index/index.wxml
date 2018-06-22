@@ -12,7 +12,7 @@
      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{imgUrls}}" wx:key="imgUrls">
         <swiper-item>
-          <image src="{{item}}" class="slide-image" width="100%" height="150" />
+          <image src="{{item}}" class="slide-image" style="width:100%;height:100%;"  />
         </swiper-item>
       </block>
     </swiper> 
@@ -24,7 +24,8 @@
           <view wx:for="{{articleList}}" wx:key="id">
              <navigator url="../article/article?articleId={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
               <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <image class="weui-media-box__thumb" src="../../images/{{item.icon}}" />
+                <!-- <image class="weui-media-box__thumb" src="../../images/{{item.icon}}" /> -->
+                <image class="weui-media-box__thumb" src="../../images/lsxq.jpg" />
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                 <view class="weui-media-box__title">{{item.title}}</view>

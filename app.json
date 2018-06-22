@@ -1,12 +1,12 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/addArticle/addArticle",
     "pages/logs/logs",
     "pages/article/article",
     "pages/personal/personal",
     "pages/userinfo/userinfo",
     "pages/sports/sports",
-    "pages/addArticle/addArticle",
     "pages/test/test"
   ],
   "window":{

@@ -1,3 +1,5 @@
+var app = getApp();
+var typeJson = {};
 Page({
   data: {
     showTopTips: false,
@@ -20,10 +22,26 @@ Page({
     countries: ["中国", "美国", "英国"],
     countryIndex: 0,
 
-    accounts: ["微信号", "QQ", "Email"],
+    accounts: ["亲情"],
     accountIndex: 0,
 
     isAgree: false
+  },
+  onLoad: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverAddress + '/articleType/getAll',
+      success: function (data) {
+        var accounts = [];
+        data.data.data.forEach(function (e) {
+          typeJson[e.type] = e.id;
+          accounts.push(e.type);
+        });
+        that.setData({
+          accounts: accounts
+        })
+      }
+    })
   },
   showTopTips: function () {
     var that = this;
@@ -35,18 +53,6 @@ Page({
         showTopTips: false
       });
     }, 3000);
-  },
-  radioChange: function (e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value);
-
-    var radioItems = this.data.radioItems;
-    for (var i = 0, len = radioItems.length; i < len; ++i) {
-      radioItems[i].checked = radioItems[i].value == e.detail.value;
-    }
-
-    this.setData({
-      radioItems: radioItems
-    });
   },
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
@@ -67,30 +73,6 @@ Page({
       checkboxItems: checkboxItems
     });
   },
-  bindDateChange: function (e) {
-    this.setData({
-      date: e.detail.value
-    })
-  },
-  bindTimeChange: function (e) {
-    this.setData({
-      time: e.detail.value
-    })
-  },
-  bindCountryCodeChange: function (e) {
-    console.log('picker country code 发生选择改变，携带值为', e.detail.value);
-
-    this.setData({
-      countryCodeIndex: e.detail.value
-    })
-  },
-  bindCountryChange: function (e) {
-    console.log('picker country 发生选择改变，携带值为', e.detail.value);
-
-    this.setData({
-      countryIndex: e.detail.value
-    })
-  },
   bindAccountChange: function (e) {
     console.log('picker account 发生选择改变，携带值为', e.detail.value);
 
@@ -98,9 +80,35 @@ Page({
       accountIndex: e.detail.value
     })
   },
-  bindAgreeChange: function (e) {
-    this.setData({
-      isAgree: !!e.detail.value.length
-    });
+  formSubmit: function (e) {
+    console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    var that = this;
+    var openid = wx.getStorageSync('openId');
+    var data = e.detail.value;
+    data['openId'] = openid;
+    console.log(this.data.accounts[this.data.accountIndex]);
+    data['type'] = typeJson[this.data.accounts[this.data.accountIndex]];
+
+    wx.request({
+      url: app.globalData.serverAddress + '/article/add',
+      method: "POST",
+      data: data,
+      success: function (data) {
+        console.log(data.data.code);
+        if (data.data.code >= 0) {
+          wx.switchTab({
+            url: '../index/index',
+            success: function(data){
+              var page = getCurrentPages().pop();
+              if (page == undefined || page == null) return;
+              page.onPullDownRefresh(); 
+            }
+          })
+        }
+      }
+    })
+  },
+  formReset: function () {
+    console.log('form发生了reset事件')
   }
 });

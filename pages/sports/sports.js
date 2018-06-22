@@ -19,19 +19,19 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         width = res.windowWidth;
-        console.log(res.windowWidth)
       }
     })
     wx.getWeRunData({
       success(res) {
-        console.log(res.encryptedData);
-        console.log(res.iv);
+        console.log(res.encryptedData)
+        console.log(res.iv)
+        console.log();
         wx.request({
           url: app.globalData.serverAddress + '/sports/getSteps',
           data: {
             encryptedData: res.encryptedData,
             iv: res.iv,
-            openId: openId
+            openId: wx.getStorageSync('openId')
           },
           method: "POST",
           success: function (data) {
@@ -56,7 +56,6 @@ Page({
               yCaption: '步数',
               canvasId: 'chartContainer'
             });
-            console.log(stepData);
           }
         })
       }

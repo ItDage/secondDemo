@@ -60,6 +60,7 @@ App({
     userInfo: null,
     serverAddress: "https://www.itdage.top/weixin-server",
     articleList:[],
-    werun:false
+    werun:false,
+    isRefreshIndex: false
   }
 })
