@@ -8,6 +8,7 @@ App({
     wx.setStorageSync('logs', logs)
 
     var openid = wx.getStorageSync('openId');
+    console.log('openId' + openid)
     if (openid != null && openid != '') {
       console.log('有openId了');
     } else {

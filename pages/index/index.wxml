@@ -9,37 +9,38 @@
   </view>
 </block>
 <block wx:else>
-     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}" wx:key="imgUrls">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image" style="width:100%;height:100%;"  />
-        </swiper-item>
-      </block>
-    </swiper> 
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="imgUrls">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" style="width:100%;height:100%;" />
+      </swiper-item>
+    </block>
+  </swiper>
 
-    <view>
-      <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__hd">文章列表</view>
-        <view class="weui-panel__bd">
-          <view wx:for="{{articleList}}" wx:key="id">
-             <navigator url="../article/article?articleId={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <!-- <image class="weui-media-box__thumb" src="../../images/{{item.icon}}" /> -->
-                <image class="weui-media-box__thumb" src="../../images/lsxq.jpg" />
-              </view>
-              <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                <view class="weui-media-box__title">{{item.title}}</view>
-                 <view class="weui-media-box__desc">{{item.articleAbstract}}</view> 
-              </view>
-            </navigator>
-          </view>
+  <view>
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">文章列表</view>
+      <view class="weui-panel__bd">
+        <view wx:for="{{articleList}}" wx:key="id">
+          <navigator url="../article/article?articleId={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style='width:60px; height:75px;'>
+              <!-- <image class="weui-media-box__thumb" src="../../images/{{item.icon}}" /> -->
+              <image class="weui-media-box__thumb" src="../../images/lsxq.jpg" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+               <view class="weui-media-box__title">{{item.title}}</view> 
+              <view class="articleInfo"><image class='articleInfoImage01' src='../../images/view.png'/>(888) <image class='articleInfoImage02' src='../../images/publishDate.png'/>{{item.publishDate}}</view>
+              <view class="weui-media-box__desc">{{item.articleAbstract}}</view>
+            </view>
+          </navigator>
         </view>
-        <view class="weui-panel__ft" wx:if="{{nomore}}">
-          <view class="weui-cell weui-cell_access weui-cell_link">
-            <view class="weui-cell__bd" style='text-align:center'>没有更多了</view>
-          </view>
+      </view>
+      <view class="weui-panel__ft" wx:if="{{nomore}}">
+        <view class="weui-cell weui-cell_access weui-cell_link">
+          <view class="weui-cell__bd" style='text-align:center'>没有更多了</view>
         </view>
       </view>
     </view>
+  </view>
   <image src='../../images/add.png' class='addArticle' bindtap="addArticle"></image>
 </block>

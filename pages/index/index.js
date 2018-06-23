@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+var util = require('../../utils/util.js')
 const app = getApp()
 
 var base64 = require("../../images/base64");
@@ -28,7 +29,6 @@ Page({
     })
   },
   onLoad: function (options) {
-   console.log("us" + app.globalData.isRefreshIndex)
     var that = this;
 
     if (app.globalData.userInfo) {
@@ -83,7 +83,6 @@ Page({
 
   },
   getUserInfo: function (e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,

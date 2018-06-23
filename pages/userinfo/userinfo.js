@@ -62,7 +62,7 @@ Page({
       data: { "openId": openid },
       success: function (data) {
         that.setData({
-          date: data.data.birthday == "undefined" ? '1994-01-01' : data.data.birthday,
+          date: (data.data.birthday == "undefined" || data.data.birthday == null) ? '1994-01-01' : data.data.birthday,
           phoneNumber: data.data.phoneNumber == 'undefined' ? null : data.data.phoneNumber
         })
       },
